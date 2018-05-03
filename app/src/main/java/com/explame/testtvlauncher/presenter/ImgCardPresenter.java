@@ -1,4 +1,4 @@
-package com.explame.testtvlauncher.widget;
+package com.explame.testtvlauncher.presenter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

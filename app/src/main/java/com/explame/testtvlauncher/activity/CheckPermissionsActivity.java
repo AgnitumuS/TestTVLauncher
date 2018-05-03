@@ -71,6 +71,8 @@ public class CheckPermissionsActivity extends Activity {
         } else {
             Intent intent = new Intent(CheckPermissionsActivity.this,
                     MainActivity.class);
+//            Intent intent = new Intent(CheckPermissionsActivity.this,
+//                    CardExampleActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
@@ -91,6 +93,8 @@ public class CheckPermissionsActivity extends Activity {
         } else {
             Intent intent = new Intent(CheckPermissionsActivity.this,
                     MainActivity.class);
+//            Intent intent = new Intent(CheckPermissionsActivity.this,
+//                    CardExampleActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();

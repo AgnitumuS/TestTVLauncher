@@ -11,8 +11,11 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <uses-feature
-        android:name="android.software.leanback"
+        android:name="android.hardware.touchscreen"
         android:required="false"/>
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="true"/>
 
     <application
         android:name=".App"
@@ -37,6 +40,9 @@
             android:theme="@style/myTransparent"/>
         <activity
             android:name=".activity.MainActivity"
+            android:theme="@style/Theme.Leanback"/>
+        <activity
+            android:name=".cardexampels.CardExampleActivity"
             android:theme="@style/Theme.Leanback"/>
         <activity
             android:name=".activity.MediaDetailsActivity"

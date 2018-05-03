@@ -20,8 +20,8 @@ import com.explame.testtvlauncher.R;
 import com.explame.testtvlauncher.domain.FunctionModel;
 import com.explame.testtvlauncher.domain.MediaModel;
 import com.explame.testtvlauncher.utils.LogUtils;
-import com.explame.testtvlauncher.widget.FunctionCardPresenter;
-import com.explame.testtvlauncher.widget.ImgCardPresenter;
+import com.explame.testtvlauncher.presenter.FunctionCardPresenter;
+import com.explame.testtvlauncher.presenter.ImgCardPresenter;
 
 import java.util.List;
 
@@ -83,7 +83,6 @@ public class MainActivity extends Activity {
         rowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
 
         addFunctionRow();
-        addPhotoRow();
 
         mBrowseFragment.setAdapter(rowsAdapter);
         mBrowseFragment.setOnItemViewClickedListener(new OnItemViewClickedListener() {
@@ -123,14 +122,14 @@ public class MainActivity extends Activity {
 
 
     private void addFunctionRow() {
-//        String headerName = getResources().getString(R.string.app_header_function_name);
+        String headerName = getResources().getString(R.string.app_header_function_name);
         ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new FunctionCardPresenter());
         List<FunctionModel> functionModels = FunctionModel.getFunctionList(mContext);
         int cardCount = functionModels.size();
         for (int i = 0; i < cardCount; i++) {
             listRowAdapter.add(functionModels.get(i));
         }
-        HeaderItem header = new HeaderItem(0, "");
+        HeaderItem header = new HeaderItem(0, headerName);
         rowsAdapter.add(new ListRow(header, listRowAdapter));
     }
 
