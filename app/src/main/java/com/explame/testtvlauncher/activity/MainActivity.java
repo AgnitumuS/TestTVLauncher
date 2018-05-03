@@ -8,19 +8,22 @@ import android.support.v17.leanback.app.BackgroundManager;
 import android.support.v17.leanback.app.BrowseFragment;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.HeaderItem;
-import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowPresenter;
 import android.support.v17.leanback.widget.OnItemViewClickedListener;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.util.DisplayMetrics;
 
 import com.explame.testtvlauncher.R;
+import com.explame.testtvlauncher.domain.FunctionModel;
 import com.explame.testtvlauncher.domain.MediaModel;
+import com.explame.testtvlauncher.utils.LogUtils;
+import com.explame.testtvlauncher.widget.FunctionCardPresenter;
 import com.explame.testtvlauncher.widget.ImgCardPresenter;
+
+import java.util.List;
 
 public class MainActivity extends Activity {
 
@@ -78,6 +81,8 @@ public class MainActivity extends Activity {
 
     private void buildRowsAdapter() {
         rowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
+
+        addFunctionRow();
         addPhotoRow();
 
         mBrowseFragment.setAdapter(rowsAdapter);
@@ -85,14 +90,22 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
                 if (item instanceof MediaModel) {
-                    MediaModel mediaModel = (MediaModel) item;
-                    Intent intent = new Intent(mContext, MediaDetailsActivity.class);
-                    intent.putExtra(MediaDetailsActivity.MEDIA, mediaModel);
-                    Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                            (Activity) mContext,
-                            ((ImageCardView) itemViewHolder.view).getMainImageView(),
-                            MediaDetailsActivity.SHARED_ELEMENT_NAME).toBundle();
-                    startActivity(intent, bundle);
+//                    MediaModel mediaModel = (MediaModel) item;
+//                    Intent intent = new Intent(mContext, MediaDetailsActivity.class);
+//                    intent.putExtra(MediaDetailsActivity.MEDIA, mediaModel);
+//                    Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
+//                            (Activity) mContext,
+//                            ((ImageCardView) itemViewHolder.view).getMainImageView(),
+//                            MediaDetailsActivity.SHARED_ELEMENT_NAME).toBundle();
+//                    startActivity(intent, bundle);
+                    LogUtils.i("row----->" + row.getId() + "|" + row.toString());
+                } else if (item instanceof FunctionModel) {
+                    LogUtils.i("row----->" + row.getId() + "|" + row.toString());
+                    FunctionModel functionModel = (FunctionModel) item;
+                    Intent intent = functionModel.getIntent();
+                    if (intent != null) {
+                        startActivity(intent);
+                    }
                 }
             }
         });
@@ -104,7 +117,20 @@ public class MainActivity extends Activity {
         for (MediaModel mediaModel : MediaModel.getPhotoModels()) {
             listRowAdapter.add(mediaModel);
         }
-        HeaderItem header = new HeaderItem(0, headerName);
+        HeaderItem header = new HeaderItem(1, headerName);
+        rowsAdapter.add(new ListRow(header, listRowAdapter));
+    }
+
+
+    private void addFunctionRow() {
+//        String headerName = getResources().getString(R.string.app_header_function_name);
+        ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new FunctionCardPresenter());
+        List<FunctionModel> functionModels = FunctionModel.getFunctionList(mContext);
+        int cardCount = functionModels.size();
+        for (int i = 0; i < cardCount; i++) {
+            listRowAdapter.add(functionModels.get(i));
+        }
+        HeaderItem header = new HeaderItem(0, "");
         rowsAdapter.add(new ListRow(header, listRowAdapter));
     }
 

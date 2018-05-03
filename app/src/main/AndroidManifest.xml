@@ -42,6 +42,9 @@
             android:name=".activity.MediaDetailsActivity"
             android:exported="true"
             android:theme="@style/Theme.Leanback"/>
+        <activity
+            android:name="com.explame.testtvlauncher.app.AppUninstall"
+            android:exported="true"/>
 
     </application>
 
