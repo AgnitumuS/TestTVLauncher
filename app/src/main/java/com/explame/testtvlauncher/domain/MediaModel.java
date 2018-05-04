@@ -138,12 +138,12 @@ public class MediaModel implements Parcelable {
         };
 
         String urls[] = {
-                "http://tupian.enterdesk.com/2012/0528/gha/9/120523112107-15.jpg",
-                "http://imgstore.cdn.sogou.com/app/a/100540002/541762.jpg",
-                "http://www.bz55.com/uploads/allimg/140729/138-140H9144A7.jpg",
-                "http://imgstore.cdn.sogou.com/app/a/100540002/717240.jpg",
-                "http://e.hiphotos.baidu.com/zhidao/pic/item/5ab5c9ea15ce36d3418e754838f33a87e850b1c4.jpg",
-                "http://www.bz55.com/uploads/allimg/150402/139-150402152530.jpg",
+                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525427899349&di=9b9269ccbee3d64f96803d4a04ac4634&imgtype=0&src=http%3A%2F%2Fpic1.16pic.com%2F00%2F44%2F53%2F16pic_4453272_b.jpg",
+                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525428053860&di=6b53031560d7e2b48d6a67d753ba130f&imgtype=0&src=http%3A%2F%2Fb.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F64380cd7912397dd201348d85c82b2b7d1a28780.jpg",
+                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525428128365&di=665bb557555091c3d182932d3aa75dc2&imgtype=0&src=http%3A%2F%2Fwww.haohead.com%2Fz%2Fuploads%2Fattachment%2F3f%2F5d%2F086e2aa81aaebb6d.jpg",
+                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525428152544&di=b7c5bedb60205ffb51cce3b5a8004ecd&imgtype=0&src=http%3A%2F%2Fimg.7xz.com%2Fimg%2Fpicimg%2F201607%2F20160713124909_3127c0dc33aac7c1391.jpg",
+                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525428176390&di=f1c9546a8d724ae543cdb392d8d72fdc&imgtype=0&src=http%3A%2F%2Fwww.1688wan.com%2Fallimgs%2Fimg_inews%2F201602%2F_1454397898609.jpeg",
+                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1526022927&di=5a129c8edfb0c8cdf9b51fb26a391c08&imgtype=jpg&er=1&src=http%3A%2F%2Fpic24.photophoto.cn%2F20120817%2F0005018310006635_b.jpg",
         };
 
         for (int i = 0; i < titles.length; i++) {

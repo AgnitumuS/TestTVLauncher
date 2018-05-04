@@ -57,14 +57,7 @@ public class FunctionModel {
         appUninstall.setIcon(R.drawable.ic_app_uninstall);
         appUninstall.setIntent(new Intent(context, AppUninstall.class));
 
-        FunctionModel appUninstall1 = new FunctionModel();
-//        appUninstall1.setName("路飞");
-        appUninstall1.setIcon(R.drawable.ic_app_uninstall);
-        appUninstall1.setIntent(new Intent(context, AppUninstall.class));
-
         functionModels.add(appUninstall);
-        functionModels.add(appUninstall1);
-
         return functionModels;
     }
 }
