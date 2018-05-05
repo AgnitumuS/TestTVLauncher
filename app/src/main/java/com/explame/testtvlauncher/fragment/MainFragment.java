@@ -2,6 +2,7 @@ package com.explame.testtvlauncher.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v17.leanback.app.BackgroundManager;
@@ -11,15 +12,22 @@ import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowPresenter;
 import android.support.v17.leanback.widget.OnItemViewClickedListener;
+import android.support.v17.leanback.widget.OnItemViewSelectedListener;
 import android.support.v17.leanback.widget.Presenter;
+import android.support.v17.leanback.widget.PresenterSelector;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.explame.testtvlauncher.R;
 import com.explame.testtvlauncher.domain.FunctionModel;
+import com.explame.testtvlauncher.domain.IconHeaderItem;
 import com.explame.testtvlauncher.domain.MediaModel;
 import com.explame.testtvlauncher.presenter.FunctionCardPresenter;
+import com.explame.testtvlauncher.presenter.HeaderItemPresenter;
 import com.explame.testtvlauncher.presenter.ImgCardPresenter;
 import com.explame.testtvlauncher.utils.LogUtils;
 
@@ -75,6 +83,12 @@ public class MainFragment extends BrowseFragment {
         setHeadersTransitionOnBackEnabled(true);//暂不知道方法具体作用
         setBrandColor(getResources().getColor(R.color.fastlane_background));//设置快速通道（侧边栏）背景
         setSearchAffordanceColor(getResources().getColor(R.color.search_opaque)); //搜索图标颜色
+        setHeaderPresenterSelector(new PresenterSelector() {
+            @Override
+            public Presenter getPresenter(Object o) {
+                return new HeaderItemPresenter();
+            }
+        });
     }
 
     /**
@@ -82,10 +96,8 @@ public class MainFragment extends BrowseFragment {
      */
     private void buildRowsAdapter() {
         rowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
-
         addFunctionRow();
         addPhotoRow();
-
 
 
         setAdapter(rowsAdapter);
@@ -112,10 +124,19 @@ public class MainFragment extends BrowseFragment {
                 }
             }
         });
+
+
+        setOnItemViewSelectedListener(new OnItemViewSelectedListener() {
+            @Override
+            public void onItemSelected(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
+                LogUtils.i("----->aaaaaaaa");
+            }
+        });
     }
 
     private void addFunctionRow() {
         String headerName = getResources().getString(R.string.app_header_function_name);
+        IconHeaderItem gridItemPresenterHeader = new IconHeaderItem(0, headerName, R.mipmap.ic_launcher_round);
         ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new FunctionCardPresenter());
         List<FunctionModel> functionModels = FunctionModel.getFunctionList(mActivity);
         int cardCount = functionModels.size();
@@ -123,18 +144,59 @@ public class MainFragment extends BrowseFragment {
             listRowAdapter.add(functionModels.get(i));
         }
         HeaderItem header = new HeaderItem(0, headerName);
-        rowsAdapter.add(new ListRow(header, listRowAdapter));
+        rowsAdapter.add(new ListRow(gridItemPresenterHeader, listRowAdapter));
     }
 
 
     private void addPhotoRow() {
         String headerName = getResources().getString(R.string.app_header_photo_name);
+        IconHeaderItem gridItemPresenterHeader = new IconHeaderItem(1, headerName, R.mipmap.ic_launcher_round);
         ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new ImgCardPresenter());
         for (MediaModel mediaModel : MediaModel.getPhotoModels()) {
             listRowAdapter.add(mediaModel);
         }
         HeaderItem header = new HeaderItem(1, headerName);
-        rowsAdapter.add(new ListRow(header, listRowAdapter));
+        rowsAdapter.add(new ListRow(gridItemPresenterHeader, listRowAdapter));
     }
 
+
+    private void addHeaderRow() {
+        /* GridItemPresenter */
+        IconHeaderItem gridItemPresenterHeader = new IconHeaderItem(0, "GridItemPresenter", R.mipmap.ic_launcher_round);
+        GridItemPresenter gridItemPresenter = new GridItemPresenter();
+        ArrayObjectAdapter gridRowAdapter = new ArrayObjectAdapter(gridItemPresenter);
+        gridRowAdapter.add("ITEM 1");
+        gridRowAdapter.add("ITEM 2");
+        gridRowAdapter.add("ITEM 3");
+        rowsAdapter.add(new ListRow(gridItemPresenterHeader, gridRowAdapter));
+    }
+
+
+    private static final int GRID_ITEM_WIDTH = 300;
+    private static final int GRID_ITEM_HEIGHT = 200;
+
+    private class GridItemPresenter extends Presenter {
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent) {
+            TextView view = new TextView(parent.getContext());
+            view.setLayoutParams(new ViewGroup.LayoutParams(GRID_ITEM_WIDTH, GRID_ITEM_HEIGHT));
+            view.setFocusable(true);
+            view.setFocusableInTouchMode(true);
+            view.setBackgroundColor(getResources().getColor(R.color.default_background));
+            view.setTextColor(Color.WHITE);
+            view.setGravity(Gravity.CENTER);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder viewHolder, Object item) {
+            ((TextView) viewHolder.view).setText((String) item);
+        }
+
+        @Override
+        public void onUnbindViewHolder(ViewHolder viewHolder) {
+
+        }
+    }
 }
