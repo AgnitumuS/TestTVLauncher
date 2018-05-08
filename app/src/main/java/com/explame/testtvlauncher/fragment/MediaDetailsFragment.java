@@ -2,6 +2,7 @@ package com.explame.testtvlauncher.fragment;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v17.leanback.app.BackgroundManager;
 import android.support.v17.leanback.app.DetailsFragment;
@@ -14,14 +15,19 @@ import android.support.v17.leanback.widget.FullWidthDetailsOverviewRowPresenter;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowPresenter;
 import android.support.v17.leanback.widget.OnActionClickedListener;
-import android.support.v17.leanback.widget.SparseArrayObjectAdapter;
+import android.support.v17.leanback.widget.Presenter;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
+import com.explame.testtvlauncher.R;
 import com.explame.testtvlauncher.activity.MediaDetailsActivity;
 import com.explame.testtvlauncher.domain.MediaModel;
 import com.explame.testtvlauncher.presenter.MediaDetailsDescriptionPresenter;
@@ -75,6 +81,7 @@ public class MediaDetailsFragment extends DetailsFragment {
 //                } else {
 //                    Toast.makeText(getActivity(), action.toString(), Toast.LENGTH_SHORT).show();
 //                }
+                Toast.makeText(getActivity(), action.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -83,7 +90,8 @@ public class MediaDetailsFragment extends DetailsFragment {
         mRowsAdapter = new ArrayObjectAdapter(selector);
 
         final DetailsOverviewRow detailsOverview = new DetailsOverviewRow(mMediaModel);
-
+        detailsOverview.addAction(new Action(1, "香蕉激光枪"));
+        detailsOverview.addAction(new Action(2, "巨人之拳"));
         Glide.with(mContext)
                 .load(mMediaModel.getImageUrl())
                 .asBitmap()
@@ -101,16 +109,13 @@ public class MediaDetailsFragment extends DetailsFragment {
                     }
                 })
                 .into(-1, -1);
-
         updateBackground(mMediaModel.getImageUrl());
-
-        SparseArrayObjectAdapter adapter = new SparseArrayObjectAdapter();
-        if (!mMediaModel.getVideoUrl().isEmpty()) {
-            adapter.set(ACTION_WATCH_TRAILER, new Action(ACTION_WATCH_TRAILER, "播放"));
-        }
-        detailsOverview.setActionsAdapter(adapter);
+//        SparseArrayObjectAdapter adapter = new SparseArrayObjectAdapter();
+//        if (!mMediaModel.getVideoUrl().isEmpty()) {
+//            adapter.set(ACTION_WATCH_TRAILER, new Action(ACTION_WATCH_TRAILER, "播放"));
+//        }
+//        detailsOverview.setActionsAdapter(adapter);
         mRowsAdapter.add(detailsOverview);
-
         setAdapter(mRowsAdapter);
     }
 
@@ -137,4 +142,31 @@ public class MediaDetailsFragment extends DetailsFragment {
     public void onDestroy() {
         super.onDestroy();
     }
+
+    private class GridItemPresenter extends Presenter {
+
+        @Override
+        public Presenter.ViewHolder onCreateViewHolder(ViewGroup parent) {
+            TextView view = new TextView(parent.getContext());
+            view.setLayoutParams(new ViewGroup.LayoutParams(mContext.getResources().getDimensionPixelSize(R.dimen.dimen_300x), mContext.getResources().getDimensionPixelSize(R.dimen.dimen_176x)));
+            view.setFocusable(true);
+            view.setFocusableInTouchMode(true);
+            view.setBackgroundColor(getResources().getColor(R.color.default_background));
+            view.setTextColor(Color.WHITE);
+            view.setGravity(Gravity.CENTER);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder viewHolder, Object item) {
+            ((TextView) viewHolder.view).setText((String) item);
+        }
+
+        @Override
+        public void onUnbindViewHolder(ViewHolder viewHolder) {
+
+        }
+    }
+
+
 }

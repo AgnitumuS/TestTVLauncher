@@ -43,11 +43,12 @@ public class ImgCardPresenter extends Presenter {
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, Object item) {
         ImageCardView cardView = (ImageCardView) viewHolder.view;
-        cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
+        cardView.setMainImageDimensions(mContext.getResources().getDimensionPixelSize(R.dimen.dimen_300x), mContext.getResources().getDimensionPixelSize(R.dimen.dimen_176x));
         if (item instanceof MediaModel) {
             MediaModel mediaModel = (MediaModel) item;
             cardView.setTitleText(mediaModel.getTitle());
-            cardView.setContentText(mediaModel.getContent());
+//            cardView.setContentText(mediaModel.getContent());
+            cardView.setBadgeImage(mContext.getResources().getDrawable(R.drawable.tvico));//设置可绘制的徽章图像。
             Glide.with(cardView.getMainImageView().getContext())
                     .load(mediaModel.getImageUrl())
                     .crossFade()

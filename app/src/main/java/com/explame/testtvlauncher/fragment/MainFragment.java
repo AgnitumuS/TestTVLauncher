@@ -2,13 +2,14 @@ package com.explame.testtvlauncher.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v17.leanback.app.BackgroundManager;
 import android.support.v17.leanback.app.BrowseFragment;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
-import android.support.v17.leanback.widget.HeaderItem;
+import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowPresenter;
 import android.support.v17.leanback.widget.OnItemViewClickedListener;
@@ -17,12 +18,17 @@ import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.PresenterSelector;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.explame.testtvlauncher.R;
+import com.explame.testtvlauncher.activity.MediaDetailsActivity;
 import com.explame.testtvlauncher.domain.FunctionModel;
 import com.explame.testtvlauncher.domain.IconHeaderItem;
 import com.explame.testtvlauncher.domain.MediaModel;
@@ -101,19 +107,22 @@ public class MainFragment extends BrowseFragment {
 
 
         setAdapter(rowsAdapter);
+        /**
+         * 点击监听
+         */
         setOnItemViewClickedListener(new OnItemViewClickedListener() {
             @Override
             public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
                 if (item instanceof MediaModel) {
-//                    MediaModel mediaModel = (MediaModel) item;
-//                    Intent intent = new Intent(mContext, MediaDetailsActivity.class);
-//                    intent.putExtra(MediaDetailsActivity.MEDIA, mediaModel);
-//                    Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
-//                            (Activity) mContext,
-//                            ((ImageCardView) itemViewHolder.view).getMainImageView(),
-//                            MediaDetailsActivity.SHARED_ELEMENT_NAME).toBundle();
-//                    startActivity(intent, bundle);
                     LogUtils.i("row----->" + row.getId() + "|" + row.toString());
+                    MediaModel mediaModel = (MediaModel) item;
+                    Intent intent = new Intent(mActivity, MediaDetailsActivity.class);
+                    intent.putExtra(MediaDetailsActivity.MEDIA, mediaModel);
+                    Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            mActivity,
+                            ((ImageCardView) itemViewHolder.view).getMainImageView(),
+                            MediaDetailsActivity.SHARED_ELEMENT_NAME).toBundle();
+                    startActivity(intent, bundle);
                 } else if (item instanceof FunctionModel) {
                     LogUtils.i("row----->" + row.getId() + "|" + row.toString());
                     FunctionModel functionModel = (FunctionModel) item;
@@ -124,12 +133,29 @@ public class MainFragment extends BrowseFragment {
                 }
             }
         });
-
-
+        /**
+         *选择监听
+         */
         setOnItemViewSelectedListener(new OnItemViewSelectedListener() {
             @Override
             public void onItemSelected(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
-                LogUtils.i("----->aaaaaaaa");
+                if (item instanceof MediaModel) {//当选择MediaModel的时候，改变背景图片
+                    MediaModel mediaModel = (MediaModel) item;
+                    int width = mMetrics.widthPixels;
+                    int height = mMetrics.heightPixels;
+                    Glide.with(mActivity)
+                            .load(mediaModel.getImageUrl())
+                            .asBitmap()
+                            .centerCrop()
+                            .into(new SimpleTarget<Bitmap>(width, height) {
+                                @Override
+                                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                                    mBackgroundManager.setBitmap(resource);
+                                }
+                            });
+                } else {
+                    mBackgroundManager.setDrawable(mDefaultBackground);
+                }
             }
         });
     }
@@ -143,7 +169,7 @@ public class MainFragment extends BrowseFragment {
         for (int i = 0; i < cardCount; i++) {
             listRowAdapter.add(functionModels.get(i));
         }
-        HeaderItem header = new HeaderItem(0, headerName);
+//        HeaderItem header = new HeaderItem(0, headerName);
         rowsAdapter.add(new ListRow(gridItemPresenterHeader, listRowAdapter));
     }
 
@@ -155,7 +181,7 @@ public class MainFragment extends BrowseFragment {
         for (MediaModel mediaModel : MediaModel.getPhotoModels()) {
             listRowAdapter.add(mediaModel);
         }
-        HeaderItem header = new HeaderItem(1, headerName);
+//        HeaderItem header = new HeaderItem(1, headerName);
         rowsAdapter.add(new ListRow(gridItemPresenterHeader, listRowAdapter));
     }
 
