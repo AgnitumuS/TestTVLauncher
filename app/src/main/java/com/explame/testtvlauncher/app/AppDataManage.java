@@ -51,7 +51,7 @@ public class AppDataManage {
             } catch (NameNotFoundException e) {
                 e.printStackTrace();
             }
-            if (!localAppBean.getPackageName().equals("com.jacky.launcher")) {
+            if (!localAppBean.getPackageName().equals("com.explame.testtvlauncher")) {
                 localArrayList.add(localAppBean);
             }
         }

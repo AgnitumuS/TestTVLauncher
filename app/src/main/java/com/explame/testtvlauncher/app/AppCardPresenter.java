@@ -46,9 +46,9 @@ public class AppCardPresenter extends Presenter {
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, Object item) {
         ImageCardView cardView = (ImageCardView) viewHolder.view;
-        cardView.setMainImageDimensions(CARD_WIDTH,CARD_HEIGHT);
+        cardView.setMainImageDimensions(mContext.getResources().getDimensionPixelSize(R.dimen.dimen_300x), mContext.getResources().getDimensionPixelSize(R.dimen.dimen_176x));
         AppModel appBean = (AppModel) item;
-        cardView.setMainImageScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        cardView.setMainImageScaleType(ImageView.ScaleType.FIT_XY);
         cardView.getMainImageView().setImageDrawable(appBean.getIcon());
         cardView.setTitleText(appBean.getName());
     }

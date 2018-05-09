@@ -29,6 +29,9 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.explame.testtvlauncher.R;
 import com.explame.testtvlauncher.activity.MediaDetailsActivity;
+import com.explame.testtvlauncher.app.AppCardPresenter;
+import com.explame.testtvlauncher.app.AppDataManage;
+import com.explame.testtvlauncher.app.AppModel;
 import com.explame.testtvlauncher.domain.FunctionModel;
 import com.explame.testtvlauncher.domain.IconHeaderItem;
 import com.explame.testtvlauncher.domain.MediaModel;
@@ -37,6 +40,7 @@ import com.explame.testtvlauncher.presenter.HeaderItemPresenter;
 import com.explame.testtvlauncher.presenter.ImgCardPresenter;
 import com.explame.testtvlauncher.utils.LogUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -104,6 +108,7 @@ public class MainFragment extends BrowseFragment {
         rowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
         addFunctionRow();
         addPhotoRow();
+        addAppRow();
 
 
         setAdapter(rowsAdapter);
@@ -129,6 +134,13 @@ public class MainFragment extends BrowseFragment {
                     Intent intent = functionModel.getIntent();
                     if (intent != null) {
                         startActivity(intent);
+                    }
+                } else if (item instanceof AppModel) {
+                    AppModel appBean = (AppModel) item;
+                    Intent launchIntent = mActivity.getPackageManager().getLaunchIntentForPackage(
+                            appBean.getPackageName());
+                    if (launchIntent != null) {
+                        mActivity.startActivity(launchIntent);
                     }
                 }
             }
@@ -185,6 +197,21 @@ public class MainFragment extends BrowseFragment {
         rowsAdapter.add(new ListRow(gridItemPresenterHeader, listRowAdapter));
     }
 
+    /**
+     * APP展示
+     */
+    private void addAppRow() {
+        String headerName = getResources().getString(R.string.app_header_app_name);
+        ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new AppCardPresenter());
+        ArrayList<AppModel> appDataList = new AppDataManage(mActivity).getLaunchAppList();
+        int cardCount = appDataList.size();
+        for (AppModel appModel : appDataList) {
+            listRowAdapter.add(appModel);
+        }
+        IconHeaderItem gridItemPresenterHeader = new IconHeaderItem(1, headerName, R.mipmap.ic_launcher_round);
+        rowsAdapter.add(new ListRow(gridItemPresenterHeader, listRowAdapter));
+    }
+
 
     private void addHeaderRow() {
         /* GridItemPresenter */
@@ -196,7 +223,6 @@ public class MainFragment extends BrowseFragment {
         gridRowAdapter.add("ITEM 3");
         rowsAdapter.add(new ListRow(gridItemPresenterHeader, gridRowAdapter));
     }
-
 
     private static final int GRID_ITEM_WIDTH = 300;
     private static final int GRID_ITEM_HEIGHT = 200;
