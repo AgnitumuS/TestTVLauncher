@@ -54,6 +54,10 @@
             android:name="com.explame.testtvlauncher.app.AppUninstall"
             android:exported="true"/>
 
+        <activity
+            android:name="com.explame.testtvlauncher.activity.VideoActivity"
+            android:hardwareAccelerated="true"/>
+
     </application>
 
 </manifest>

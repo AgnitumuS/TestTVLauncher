@@ -174,13 +174,13 @@ public class MediaModel implements Parcelable {
         };
 
         String urls[] = {
-                "http://hiphotos.baidu.com/%B1%A1%B1%CC%C0%B6%C9%C0/pic/item/e0d2dc358b514685d1a2d3fa.jpg",
-                "http://imgsrc.baidu.com/forum/pic/item/410e5aafa40f4bfbd8a9a68a034f78f0f63618fa.jpg",
+                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1526524565&di=c65ed1e2db9463db0ca0173f2d10d099&imgtype=jpg&er=1&src=http%3A%2F%2Fcdnq.duitang.com%2Fuploads%2Fitem%2F201502%2F19%2F20150219214917_vXtH5.jpeg",
+                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525929867209&di=c2a581df1503c65302c23bbe2bfad25d&imgtype=0&src=http%3A%2F%2Fimage1.xyzs.com%2Fupload%2Fe2%2F23%2F509%2F20150506%2F143086854854248_0.jpg",
         };
 
         String videoUrls[] = {
-                "http://eshare.live.otvcloud.com/otv/nyz/live/channel01/index.m3u8",
-                "http://111.39.226.103:8112/120000001001/wlds:8080/ysten-business/live/hdhunanstv/.m3u8",
+                "http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4",
+                "http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4",
         };
 
         for (int i = 0; i < titles.length; i++) {

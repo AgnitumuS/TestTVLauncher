@@ -1,6 +1,7 @@
 package com.explame.testtvlauncher.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.explame.testtvlauncher.R;
 import com.explame.testtvlauncher.activity.MediaDetailsActivity;
+import com.explame.testtvlauncher.activity.VideoActivity;
 import com.explame.testtvlauncher.domain.MediaModel;
 import com.explame.testtvlauncher.presenter.MediaDetailsDescriptionPresenter;
 
@@ -74,13 +76,13 @@ public class MediaDetailsFragment extends DetailsFragment {
         rowPresenter.setOnActionClickedListener(new OnActionClickedListener() {
             @Override
             public void onActionClicked(Action action) {
-//                if (action.getId() == ACTION_WATCH_TRAILER) {
-//                    Intent intent = new Intent(getActivity(), VideoActivity.class);
-//                    intent.putExtra(VideoActivity.VIDEO, mMediaModel);
-//                    startActivity(intent);
-//                } else {
-//                    Toast.makeText(getActivity(), action.toString(), Toast.LENGTH_SHORT).show();
-//                }
+                if (action.getId() == ACTION_WATCH_TRAILER) {
+                    Intent intent = new Intent(getActivity(), VideoActivity.class);
+                    intent.putExtra(VideoActivity.VIDEO, mMediaModel);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getActivity(), action.toString(), Toast.LENGTH_SHORT).show();
+                }
                 Toast.makeText(getActivity(), action.toString(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -90,8 +92,11 @@ public class MediaDetailsFragment extends DetailsFragment {
         mRowsAdapter = new ArrayObjectAdapter(selector);
 
         final DetailsOverviewRow detailsOverview = new DetailsOverviewRow(mMediaModel);
-        detailsOverview.addAction(new Action(1, "香蕉激光枪"));
-        detailsOverview.addAction(new Action(2, "巨人之拳"));
+        if (!mMediaModel.getVideoUrl().isEmpty()) {
+            detailsOverview.addAction(new Action(ACTION_WATCH_TRAILER, "播放"));
+        }
+        detailsOverview.addAction(new Action(2, "香蕉激光枪"));
+        detailsOverview.addAction(new Action(3, "巨人之拳"));
         Glide.with(mContext)
                 .load(mMediaModel.getImageUrl())
                 .asBitmap()

@@ -38,6 +38,7 @@ import com.explame.testtvlauncher.domain.MediaModel;
 import com.explame.testtvlauncher.presenter.FunctionCardPresenter;
 import com.explame.testtvlauncher.presenter.HeaderItemPresenter;
 import com.explame.testtvlauncher.presenter.ImgCardPresenter;
+import com.explame.testtvlauncher.presenter.VidoeCardPresenter;
 import com.explame.testtvlauncher.utils.LogUtils;
 
 import java.util.ArrayList;
@@ -109,6 +110,7 @@ public class MainFragment extends BrowseFragment {
         addFunctionRow();
         addPhotoRow();
         addAppRow();
+        addVideoRow();
 
 
         setAdapter(rowsAdapter);
@@ -136,6 +138,7 @@ public class MainFragment extends BrowseFragment {
                         startActivity(intent);
                     }
                 } else if (item instanceof AppModel) {
+                    LogUtils.i("row----->" + row.getId() + "|" + row.toString());
                     AppModel appBean = (AppModel) item;
                     Intent launchIntent = mActivity.getPackageManager().getLaunchIntentForPackage(
                             appBean.getPackageName());
@@ -208,7 +211,20 @@ public class MainFragment extends BrowseFragment {
         for (AppModel appModel : appDataList) {
             listRowAdapter.add(appModel);
         }
-        IconHeaderItem gridItemPresenterHeader = new IconHeaderItem(1, headerName, R.mipmap.ic_launcher_round);
+        IconHeaderItem gridItemPresenterHeader = new IconHeaderItem(2, headerName, R.mipmap.ic_launcher_round);
+        rowsAdapter.add(new ListRow(gridItemPresenterHeader, listRowAdapter));
+    }
+
+    /**
+     * 视频row
+     */
+    private void addVideoRow() {
+        String headerName = getResources().getString(R.string.app_header_video_name);
+        ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new VidoeCardPresenter());
+        for (MediaModel mediaModel : MediaModel.getVideoModels()) {
+            listRowAdapter.add(mediaModel);
+        }
+        IconHeaderItem gridItemPresenterHeader = new IconHeaderItem(3, headerName, R.mipmap.ic_launcher_round);
         rowsAdapter.add(new ListRow(gridItemPresenterHeader, listRowAdapter));
     }
 
@@ -250,5 +266,11 @@ public class MainFragment extends BrowseFragment {
         public void onUnbindViewHolder(ViewHolder viewHolder) {
 
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LogUtils.i("----->onResume");
     }
 }
