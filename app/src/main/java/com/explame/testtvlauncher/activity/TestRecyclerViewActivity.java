@@ -1,4 +1,4 @@
-package com.explame.testtvlauncher.customtvrecyclerview;
+package com.explame.testtvlauncher.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,15 +9,18 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.explame.testtvlauncher.R;
+import com.explame.testtvlauncher.customtvrecyclerview.CustomRecyclerView;
+import com.explame.testtvlauncher.customtvrecyclerview.HomeTvAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by admin on 2018/5/10.
+ * Created by XQ on 2018/5/10.
+ * 自定义的RecyclerView，实现电视上面使用的效果
  */
 
-public class MainActivity1 extends AppCompatActivity implements View.OnClickListener {
+public class TestRecyclerViewActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Context mContext;
     private CustomRecyclerView mRecyclerView;

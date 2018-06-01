@@ -58,7 +58,7 @@
             android:name="com.explame.testtvlauncher.activity.VideoActivity"
             android:hardwareAccelerated="true"/>
         <activity
-            android:name="com.explame.testtvlauncher.customtvrecyclerview.MainActivity1"
+            android:name="com.explame.testtvlauncher.activity.TestRecyclerViewActivity"
             android:hardwareAccelerated="true"/>
 
     </application>

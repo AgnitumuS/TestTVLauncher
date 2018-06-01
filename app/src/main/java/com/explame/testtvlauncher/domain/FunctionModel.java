@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.explame.testtvlauncher.R;
+import com.explame.testtvlauncher.activity.TestRecyclerViewActivity;
 import com.explame.testtvlauncher.app.AppUninstall;
 
 import java.util.ArrayList;
@@ -54,10 +55,20 @@ public class FunctionModel {
 
         FunctionModel appUninstall = new FunctionModel();
         appUninstall.setName("应用卸载");
-        appUninstall.setIcon(R.drawable.ic_app_uninstall);
+        appUninstall.setIcon(R.drawable.category_drama);
         appUninstall.setIntent(new Intent(context, AppUninstall.class));
 
+        FunctionModel appUninstall1 = new FunctionModel();
+        appUninstall1.setName("TestRecyclerView");
+        appUninstall1.setIcon(R.drawable.category_comedy);
+        appUninstall1.setIntent(new Intent(context, TestRecyclerViewActivity.class));
+
+
         functionModels.add(appUninstall);
+        functionModels.add(appUninstall1);
+
+
+
         return functionModels;
     }
 }

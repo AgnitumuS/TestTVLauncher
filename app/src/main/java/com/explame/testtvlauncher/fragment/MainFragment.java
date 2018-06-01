@@ -272,5 +272,6 @@ public class MainFragment extends BrowseFragment {
     public void onResume() {
         super.onResume();
         LogUtils.i("----->onResume");
+        mBackgroundManager.setDrawable(mDefaultBackground);
     }
 }

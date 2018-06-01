@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.explame.testtvlauncher.R;
-import com.explame.testtvlauncher.customtvrecyclerview.MainActivity1;
 import com.explame.testtvlauncher.utils.PermissionsChecker;
 
 /**
@@ -71,7 +70,7 @@ public class CheckPermissionsActivity extends Activity {
             startPermissionsActivity();
         } else {
             Intent intent = new Intent(CheckPermissionsActivity.this,
-                    MainActivity1.class);
+                    MainActivity.class);
 //            Intent intent = new Intent(CheckPermissionsActivity.this,
 //                    CardExampleActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -93,7 +92,7 @@ public class CheckPermissionsActivity extends Activity {
             finish();
         } else {
             Intent intent = new Intent(CheckPermissionsActivity.this,
-                    MainActivity1.class);
+                    MainActivity.class);
 //            Intent intent = new Intent(CheckPermissionsActivity.this,
 //                    CardExampleActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
