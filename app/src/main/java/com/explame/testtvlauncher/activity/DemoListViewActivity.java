@@ -19,6 +19,8 @@ import java.util.Map;
 /**
  * Created by XQ on 2018/6/4.
  * DemoListView
+ *
+ * 无法正常是用BorderView中的移动，框也跟着移动，感觉listview有点问题
  */
 
 public class DemoListViewActivity extends AppCompatActivity {

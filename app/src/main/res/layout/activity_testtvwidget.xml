@@ -57,7 +57,6 @@
                 android:text="RecyclerViewGridLayout示例"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-
                 />
 
 

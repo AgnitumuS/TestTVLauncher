@@ -24,6 +24,8 @@ public class TestTvWidgetActivity extends AppCompatActivity implements View.OnCl
     private RelativeLayout main;
     private BorderView border;
 
+    private TextView textView1;//RecyclerViewLinerLayout示例
+    private TextView textView2;//RecyclerViewGridLayout示例
     private TextView textView4;//ListView示例
 
     @Override
@@ -37,8 +39,12 @@ public class TestTvWidgetActivity extends AppCompatActivity implements View.OnCl
         border.attachTo(main);
 
         textView4 = findViewById(R.id.textView4);
+        textView1 = findViewById(R.id.textView1);
+        textView2 = findViewById(R.id.textView2);
 
         textView4.setOnClickListener(this);
+        textView1.setOnClickListener(this);
+        textView2.setOnClickListener(this);
     }
 
 
@@ -50,6 +56,20 @@ public class TestTvWidgetActivity extends AppCompatActivity implements View.OnCl
                         DemoListViewActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                break;
+            case R.id.textView1:
+                Intent intent1 = new Intent(mActivity,
+                        DemoRecyclerViewActivity.class);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent1.putExtra("classname", "linerLayout");
+                startActivity(intent1);
+                break;
+            case R.id.textView2:
+                Intent intent2 = new Intent(mActivity,
+                        DemoRecyclerViewActivity.class);
+                intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent2.putExtra("classname", "gridlayout");
+                startActivity(intent2);
                 break;
         }
     }
