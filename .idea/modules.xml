@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TestTVLauncher.iml" filepath="$PROJECT_DIR$/TestTVLauncher.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tvlib/tvlib.iml" filepath="$PROJECT_DIR$/tvlib/tvlib.iml" />
     </modules>
   </component>
 </project>

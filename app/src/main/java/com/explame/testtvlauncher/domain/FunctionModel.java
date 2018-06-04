@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import com.explame.testtvlauncher.R;
 import com.explame.testtvlauncher.activity.TestRecyclerViewActivity;
+import com.explame.testtvlauncher.activity.TestTvWidgetActivity;
 import com.explame.testtvlauncher.app.AppUninstall;
 
 import java.util.ArrayList;
@@ -63,12 +64,15 @@ public class FunctionModel {
         appUninstall1.setIcon(R.drawable.category_comedy);
         appUninstall1.setIntent(new Intent(context, TestRecyclerViewActivity.class));
 
+        FunctionModel appUninstall2 = new FunctionModel();
+        appUninstall2.setName("TestTvWidget");
+        appUninstall2.setIcon(R.drawable.category_action);
+        appUninstall2.setIntent(new Intent(context, TestTvWidgetActivity.class));
+
 
         functionModels.add(appUninstall);
         functionModels.add(appUninstall1);
-
-
-
+        functionModels.add(appUninstall2);
         return functionModels;
     }
 }
