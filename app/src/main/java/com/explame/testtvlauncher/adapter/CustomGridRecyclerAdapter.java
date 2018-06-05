@@ -1,4 +1,4 @@
-package com.explame.testtvlauncher.customtvrecyclerview;
+package com.explame.testtvlauncher.adapter;
 
 import android.content.Context;
 import android.os.Build;
@@ -10,13 +10,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.explame.testtvlauncher.R;
-import com.explame.testtvlauncher.utils.LogUtils;
+import com.explame.testtvlauncher.customtvrecyclerview.CustomGridRecyclerView;
 
 import java.util.List;
 
-public class HomeTvAdapter extends CustomRecyclerView.CustomAdapter<Integer> {
+public class CustomGridRecyclerAdapter extends CustomGridRecyclerView.CustomAdapter<Integer> {
 
-    public HomeTvAdapter(Context context, List<Integer> data) {
+    public CustomGridRecyclerAdapter(Context context, List<Integer> data) {
         super(context, data);
     }
 
@@ -34,7 +34,7 @@ public class HomeTvAdapter extends CustomRecyclerView.CustomAdapter<Integer> {
     @Override
     protected void onSetItemData(RecyclerView.ViewHolder viewHolder, int position) {
         GalleryViewHolder holder = (GalleryViewHolder) viewHolder;
-        holder.tv_focus.setText("haha:" + position);
+        holder.tv_focus.setText("Grid:" + position);
     }
 
 
@@ -56,7 +56,7 @@ public class HomeTvAdapter extends CustomRecyclerView.CustomAdapter<Integer> {
         if (Build.VERSION.SDK_INT >= 21) {
             ViewCompat.animate(itemView).scaleX(1.0f).scaleY(1.0f).translationZ(0).start();
         } else {
-            LogUtils.i("HomeTvAdapter.normalStatus.scale build version < 21");
+//            LogUtils.i("CustomGridRecyclerAdapter.normalStatus.scale build version < 21");
             ViewCompat.animate(itemView).scaleX(1.0f).scaleY(1.0f).start();
             ViewGroup parent = (ViewGroup) itemView.getParent();
             parent.requestLayout();

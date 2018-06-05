@@ -2,34 +2,34 @@
 
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/dimen_330x"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
+    android:layout_marginLeft="@dimen/dimen_10x"
+    android:background="@drawable/testrv_rl_bg"
     android:clickable="true"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:focusable="true"
-    android:gravity="center"
-    android:paddingBottom="20dp"
-    android:paddingTop="20dp">
+    android:padding="@dimen/dimen_10x">
 
     <ImageView
         android:id="@+id/im"
-        android:layout_width="@dimen/dimen_300x"
-        android:layout_height="@dimen/dimen_130x"
+        android:layout_width="@dimen/dimen_150x"
+        android:layout_height="@dimen/dimen_150x"
+        android:layout_centerHorizontal="true"
         android:background="@drawable/default_poster"
         android:scaleType="fitXY"/>
 
     <TextView
         android:id="@+id/tv_focus"
-        android:layout_width="@dimen/dimen_300x"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/im"
+        android:layout_centerInParent="true"
         android:ellipsize="marquee"
         android:gravity="center"
         android:singleLine="true"
         android:text="1111111111"
-        android:textColor="@drawable/text_color_selector"
+        android:textColor="@color/appwhite"
         android:textSize="30px"/>
 
 </RelativeLayout>

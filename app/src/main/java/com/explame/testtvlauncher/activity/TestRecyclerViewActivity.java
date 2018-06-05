@@ -4,13 +4,19 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.Toast;
 
 import com.explame.testtvlauncher.R;
-import com.explame.testtvlauncher.customtvrecyclerview.CustomRecyclerView;
-import com.explame.testtvlauncher.customtvrecyclerview.HomeTvAdapter;
+import com.explame.testtvlauncher.adapter.CustomGridRecyclerAdapter;
+import com.explame.testtvlauncher.adapter.CustomLineRecyclerAdapter;
+import com.explame.testtvlauncher.customtvrecyclerview.CustomGridRecyclerView;
+import com.explame.testtvlauncher.customtvrecyclerview.CustomLineRecyclerView;
+
+import org.evilbinary.tv.widget.TvGridLayoutManagerScrolling;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +29,15 @@ import java.util.List;
 public class TestRecyclerViewActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Context mContext;
-    private CustomRecyclerView mRecyclerView;
-    private HomeTvAdapter mAdapter;
+    private CustomGridRecyclerView id_recycler_grid;
+    private CustomGridRecyclerAdapter gridrecycleradapter;
     private List<Integer> mData;
     private StaggeredGridLayoutManager mLayoutManager;
     public static final int LINE_NUM = 3;  //要显示的行数
+
+    private CustomLineRecyclerView id_recycler_line;
+    private CustomLineRecyclerAdapter linerecycleradapter;
+    private LinearLayoutManager linearlayoutmanager;
 
 
     @Override
@@ -38,20 +48,31 @@ public class TestRecyclerViewActivity extends AppCompatActivity implements View.
         setListener();
     }
 
+    private GridLayoutManager gridLayoutManager;
+
     private void initView() {
         mContext = this;
-        mRecyclerView = (CustomRecyclerView) findViewById(R.id.id_recycler_view);
+        id_recycler_grid = (CustomGridRecyclerView) findViewById(R.id.id_recycler_grid);
         initData();
-        mAdapter = new HomeTvAdapter(this, mData);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        gridrecycleradapter = new CustomGridRecyclerAdapter(this, mData);
+        id_recycler_grid.setItemAnimator(new DefaultItemAnimator());
 
+        id_recycler_line = (CustomLineRecyclerView) findViewById(R.id.id_recycler_line);
+        linerecycleradapter = new CustomLineRecyclerAdapter(this, mData);
+        id_recycler_line.setItemAnimator(new DefaultItemAnimator());
 
         //设置布局管理器
-        mLayoutManager = new StaggeredGridLayoutManager(LINE_NUM, StaggeredGridLayoutManager.VERTICAL);
-        mLayoutManager.setAutoMeasureEnabled(true);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(new MyOnItemClickListener());
+        linearlayoutmanager = new LinearLayoutManager(this);
+        linearlayoutmanager.setAutoMeasureEnabled(false);
+        id_recycler_line.setLayoutManager(linearlayoutmanager);
+        id_recycler_line.setAdapter(linerecycleradapter);
+        linerecycleradapter.setOnItemClickListener(new LineOnItemClickListener());
+
+        gridLayoutManager = new TvGridLayoutManagerScrolling(this, 3);
+        gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
+        id_recycler_grid.setLayoutManager(gridLayoutManager);
+        id_recycler_grid.setAdapter(gridrecycleradapter);
+        gridrecycleradapter.setOnItemClickListener(new GridOnItemClickListener());
     }
 
     private void initData() {
@@ -72,15 +93,29 @@ public class TestRecyclerViewActivity extends AppCompatActivity implements View.
     }
 
 
-    private class MyOnItemClickListener implements HomeTvAdapter.OnItemClickListener {
+    private class GridOnItemClickListener implements CustomGridRecyclerAdapter.OnItemClickListener {
         @Override
         public void onItemClick(View view, int position) {
-            Toast.makeText(mContext, "click:" + position, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Grid_click:" + position, Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onItemLongClick(View view, int position) {
-            Toast.makeText(mContext, "ItemLong:" + position, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Grid_ItemLong:" + position, Toast.LENGTH_SHORT).show();
         }
     }
+
+    private class LineOnItemClickListener implements CustomLineRecyclerAdapter.OnItemClickListener {
+
+        @Override
+        public void onItemClick(View view, int position) {
+            Toast.makeText(mContext, "Line_click:" + position, Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onItemLongClick(View view, int position) {
+            Toast.makeText(mContext, "Line_click:" + position, Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

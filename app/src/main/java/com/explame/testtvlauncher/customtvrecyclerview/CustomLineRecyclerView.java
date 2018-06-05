@@ -6,21 +6,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
-import android.view.FocusFinder;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.explame.testtvlauncher.utils.LogUtils;
-
 import java.util.List;
 
 
 /**
- * author songwenju
- * email：songwenju@outlook.com
  * 针对电视的自定义的RecyclerView，该RecyclerView具有以下功能：
  * 1.响应五向键，上下左右会跟着移动，并获得焦点，在获得焦点时会抬高
  * 2.在鼠标hover在条目上时会获得焦点。
@@ -28,17 +23,17 @@ import java.util.List;
  * 4.添加了是否第一个可见条目和是否是最后一个可见条目的方法
  * 5.在item获得焦点时和失去焦点时，这里有相应的回调方法。
  */
-public class CustomRecyclerView extends RecyclerView {
+public class CustomLineRecyclerView extends RecyclerView {
 
-    public CustomRecyclerView(Context context) {
+    public CustomLineRecyclerView(Context context) {
         super(context);
     }
 
-    public CustomRecyclerView(Context context, AttributeSet attrs) {
+    public CustomLineRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public CustomRecyclerView(Context context, AttributeSet attrs, int defStyle) {
+    public CustomLineRecyclerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
@@ -50,66 +45,66 @@ public class CustomRecyclerView extends RecyclerView {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        int dx = this.getChildAt(0).getWidth();
-        View focusView = this.getFocusedChild();
-        if (focusView != null) {
-            //处理左右方向键移动Item到边之后RecyclerView跟着移动
-            switch (event.getKeyCode()) {
-                case KeyEvent.KEYCODE_DPAD_RIGHT:
-                    LogUtils.i("CustomRecyclerView.KEYCODE_DPAD_RIGHT.");
-                    if (event.getAction() == KeyEvent.ACTION_UP) {
-                        return true;
-                    } else {
-                        View rightView = FocusFinder.getInstance().findNextFocus(this, focusView, View.FOCUS_RIGHT);
-                        LogUtils.i("rightView is null:" + (rightView == null));
-                        if (rightView != null) {
-                            LogUtils.i("CustomRecyclerView.requestFocusFromTouch.");
-                            rightView.requestFocusFromTouch();
-                            return true;
-                        } else {
-                            this.smoothScrollBy(dx, 0);
-                            //移动之后获得焦点，是在scroll方法中处理的。
-                            return true;
-                        }
-                    }
-                case KeyEvent.KEYCODE_DPAD_LEFT:
-                    View leftView = FocusFinder.getInstance().findNextFocus(this, focusView, View.FOCUS_LEFT);
-//                    LogUtil.i(this, "left is null:" + (leftView == null));
-                    if (event.getAction() == KeyEvent.ACTION_UP) {
-                        return true;
-                    } else {
-                        if (leftView != null) {
-                            leftView.requestFocusFromTouch();
-                            return true;
-                        } else {
-                            this.smoothScrollBy(-dx, 0);
-                            return true;
-                        }
-                    }
-            }
-        }
+//        int dx = this.getChildAt(0).getWidth();
+//        View focusView = this.getFocusedChild();
+//        if (focusView != null) {
+//            //处理左右方向键移动Item到边之后RecyclerView跟着移动
+//            switch (event.getKeyCode()) {
+//                case KeyEvent.KEYCODE_DPAD_RIGHT:
+//                    LogUtils.i("CustomRecyclerView.KEYCODE_DPAD_RIGHT.");
+//                    if (event.getAction() == KeyEvent.ACTION_UP) {
+//                        return true;
+//                    } else {
+//                        View rightView = FocusFinder.getInstance().findNextFocus(this, focusView, View.FOCUS_RIGHT);
+//                        LogUtils.i("rightView is null:" + (rightView == null));
+//                        if (rightView != null) {
+//                            LogUtils.i("CustomRecyclerView.requestFocusFromTouch.");
+//                            rightView.requestFocusFromTouch();
+//                            return true;
+//                        } else {
+//                            this.smoothScrollBy(dx, 0);
+//                            //移动之后获得焦点，是在scroll方法中处理的。
+//                            return true;
+//                        }
+//                    }
+//                case KeyEvent.KEYCODE_DPAD_LEFT:
+//                    View leftView = FocusFinder.getInstance().findNextFocus(this, focusView, View.FOCUS_LEFT);
+////                    LogUtil.i(this, "left is null:" + (leftView == null));
+//                    if (event.getAction() == KeyEvent.ACTION_UP) {
+//                        return true;
+//                    } else {
+//                        if (leftView != null) {
+//                            leftView.requestFocusFromTouch();
+//                            return true;
+//                        } else {
+//                            this.smoothScrollBy(-dx, 0);
+//                            return true;
+//                        }
+//                    }
+//            }
+//        }
         return super.dispatchKeyEvent(event);
     }
 
     @Override
     public void onScrolled(int dx, int dy) {
-//        LogUtil.i(this, "CustomRecyclerView.onScrolled.");
+//        LogUtils.i("CustomRecyclerView.onScrolled.");
         super.onScrolled(dx, dy);
-        //响应五向键，在Scroll时去获得下一个焦点
-        final View focusView = this.getFocusedChild();
-        if (focusView != null) {
-            if (dx > 0) {
-                View rightView = FocusFinder.getInstance().findNextFocus(this, focusView, View.FOCUS_RIGHT);
-                if (rightView != null) {
-                    rightView.requestFocusFromTouch();
-                }
-            } else {
-                View rightView = FocusFinder.getInstance().findNextFocus(this, focusView, View.FOCUS_LEFT);
-                if (rightView != null) {
-                    rightView.requestFocusFromTouch();
-                }
-            }
-        }
+//        //响应五向键，在Scroll时去获得下一个焦点
+//        final View focusView = this.getFocusedChild();
+//        if (focusView != null) {
+//            if (dx > 0) {
+//                View rightView = FocusFinder.getInstance().findNextFocus(this, focusView, View.FOCUS_RIGHT);
+//                if (rightView != null) {
+//                    rightView.requestFocusFromTouch();
+//                }
+//            } else {
+//                View rightView = FocusFinder.getInstance().findNextFocus(this, focusView, View.FOCUS_LEFT);
+//                if (rightView != null) {
+//                    rightView.requestFocusFromTouch();
+//                }
+//            }
+//        }
 
     }
 
@@ -217,7 +212,7 @@ public class CustomRecyclerView extends RecyclerView {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//            LogUtil.i(this,"HomeTvAdapter.onCreateViewHolder.");
+//            LogUtil.i(this,"CustomGridRecyclerAdapter.onCreateViewHolder.");
             View view = mInflater.inflate(onSetItemLayout(), parent, false);
             return onSetViewHolder(view);
         }
@@ -235,7 +230,7 @@ public class CustomRecyclerView extends RecyclerView {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, final int position) {
-//            LogUtil.i(this,"HomeTvAdapter.onBindViewHolder.");
+//            LogUtil.i(this,"CustomGridRecyclerAdapter.onBindViewHolder.");
             onSetItemData(holder, position);
             //item可以获得焦点，需要设置这个属性。
             holder.itemView.setFocusable(true);
@@ -259,7 +254,7 @@ public class CustomRecyclerView extends RecyclerView {
                                 //鼠标进入view，争取到焦点
                                 v.requestFocusFromTouch();
                                 v.requestFocus();
-//                                LogUtil.i(this,"HomeTvAdapter.onHover.position:"+position);
+//                                LogUtil.i(this,"CustomGridRecyclerAdapter.onHover.position:"+position);
                                 focusStatus(v, position);
                             }
                             break;
@@ -317,6 +312,7 @@ public class CustomRecyclerView extends RecyclerView {
          * @param position
          */
         private void focusStatus(View itemView, int position) {
+//            LogUtils.i("focusStatus----->" + position);
             if (itemView == null) {
                 return;
             }
@@ -339,11 +335,10 @@ public class CustomRecyclerView extends RecyclerView {
          * @param position
          */
         private void normalStatus(View itemView, int position) {
+//            LogUtils.i("normalStatus----->" + position);
             if (itemView == null) {
                 return;
             }
-
-
             onItemGetNormal(itemView, position);
 
         }
